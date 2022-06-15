@@ -10,8 +10,6 @@ const creatingFile = function createFile(dir, data, fileName) {
     })
 }
 
-
-
 module.exports = {
     creatingFile
 }
