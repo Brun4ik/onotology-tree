@@ -1,0 +1,70 @@
+Наследование
+                        C#
+                        Класс наследует от «предков» - класса и/или интерфейсов, имена которых перечисляются через «запятую» после «двоеточия», следующего за именем определяемого класса.
+                        Основные эффекты:
+                        Компонент (member), определённый в ближайшем вверх по иерархии наследования классе-предке, неявно определён и в классе потомке, если в классе-потомке явно не определён компонент того же типа и с тем же именем.
+                        При генерации объекта вызываются все конструкторы классов по линии наследования от вершины иерархии к данному классу.
+                        Ближайший по линии наследования вверх одноименный и однотипный компонент класса доступен в данном классе посредством префикса base.
+                        Примеры:
+                        namespace Inheritance
+                        {
+                            class A
+                            {   
+                                public int id=101;
+                                public A() { Console.WriteLine("ConStr of A " + id); this.FA(); }         
+                                public void FA(){Console.WriteLine("FA from A " + this.id);}
+                                public void FB() { Console.WriteLine("FB from A " + this.id); }
+                                public String vc  = "SALUT";
+                            }
+                            class B1 : A
+                            { 
+                                public int id=102;
+                        //        public B1() : base() { }
+                                public void FA() { Console.WriteLine("FA from B1 " + this.id); FB(); }
+                                public void FB() { Console.WriteLine("FB from B1 " + this.id); }
+                            }
+
+                            class B2 : A
+                            {
+                                public int id = 103;
+                                public B2(){ Console.WriteLine("ConStr of B2 " + id);}
+                                public void FA() { Console.WriteLine("FA from B2 " + this.id + " " + vc); base.FA(); }
+                            }
+                            class B3: A
+                            {
+                                public B3() { Console.WriteLine("ConStr of B3 " + id); this.FA(); }
+                                public int id = 104;
+                                public virtual void FA() { Console.WriteLine("FA from B3 " + this.id); FB(); }
+                            }
+                            class Program
+                            {
+                                static void Main(string[] args)
+                                {
+                                    A va =new A();
+                                    Console.WriteLine("/////////    Опыт I   ///////////");
+                                    B1 vb1 = new B1();
+                                    Console.WriteLine("/////////    Опыт II   ///////////");
+                                    B2 vb2 = new B2();
+                                    Console.WriteLine("/////////    Опыт III   ///////////");
+                                    vb1.FA();
+                                    vb2.FB();
+                                    vb2.FA();
+                                }	
+                            }
+                        }
+
+                        В протоколе заметно, что вызываются все явно определённые конструкторы.
+                        Поля и методы, не определённые в данном классе, но определённые в классе-предке, могут быть использованы в методах данного класса и вызваны в контексте его экземпляра.
+                                    Console.WriteLine("/////////    Опыт IV   ///////////");
+                                    B3 vb3 = new B3();
+                                    vb3.FA();
+
+                        Опыт IV показывает, что генерируемый объект класса B3 в конструкторе класса A (в предке) несёт контекст класса A, но в своём (класса B3) конструкторе несёт контекст класса   B3.
+                                    Console.WriteLine("/////////    Опыт V   ///////////");
+                                    va = vb1;
+                                    va.FA();
+                            }
+                        }
+                        }
+
+                        Опыт V показывает, что несмотря на то, что в переменной va содержится объект класса vb1, контекстом вызова функции FA является класс A. 

@@ -1,0 +1,31 @@
+using System;
+                        namespace Indexr
+                        {
+                            class Program
+                            {
+                                static void Main(string[] args)
+                                {
+                                    Console.WriteLine("/////////    Опыт I   ///////////");
+                                    string[] AR = new string[10];
+                                    int j = 10;
+                                    AR[6] = "W";
+                                    for (int i = 0; i < 10; i++) if (AR[i] == "W") { j = i; break; }              
+                                    Console.WriteLine("ccc {0}",j);
+                                    Console.ReadKey();
+                                    Console.WriteLine("/////////    Опыт II   ///////////");
+                                    string[][][] ARRR = new string[2][][];
+                                    Console.WriteLine("sss {0}", ARRR.Length);
+                                    for (int k = 0; k < ARRR.Length; k++)
+                                    {
+                                        string[][] ARR = new string[8][];
+                                        for (int i = 0; i < ARR.Length; i++) ARR[i] = new string[6]{"A", "B", "C", "D", "E", "F"};
+                                        ARRR[k] = ARR;
+                                    };
+                                    for (int k = 0; k < 2; k++)
+                                        for(int i = 0; i < 8; i++)
+                                            for (int m = 0; m < 6; m++) Console.Write(ARRR[k][i][m]); 
+                                    Console.WriteLine("");
+                                    Console.Read();
+                              }
+                           }
+                        }

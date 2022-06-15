@@ -1,0 +1,147 @@
+Свойства
+                        спецификаторы тип имя 
+                        {
+                        get { … return …; …  }
+                        set {  … value …. }
+                        }
+                        спецификаторы:
+                        спецификаторы видимости public | internal | private | protected | protected internal
+                        Самореализующееся свойство
+                        спецификаторы тип имя 
+                        { get ; set; }
+                        
+                        using System;
+                        
+                        namespace Indexr
+                        {
+                            class Test
+                            {
+                               static private int FF;
+                               public static string poPytka
+                                {
+                                    get { return FF.ToString(); }
+                                    set { if(Convert.ToInt32(value) % 2 == 0)FF=Convert.ToInt32(value);else Console.WriteLine("Нечётное число отвергнуто!");}
+                                }
+                                
+                               public string pPytka { get; set; }
+                            }
+                            class Tst
+                            {
+                                int ff;
+                                public int this[int indx]
+                                {
+                                    get { return ff*indx; }
+                                    set { ff = value; }
+                                }
+                            }
+                             class Mas 
+                            { 
+                                private string[,] m= {{"aa", "bb", "cc"},{"dd","ee","ff"}};
+                                public  string this[int index, int index2] 
+                                {
+                                    get { return m[index, index2]; }
+                                    set { m[index, index2] = value; }
+                                }
+                            }
+                            class B 
+                            { 
+                                public int id = 5;
+                                public Mas mm = new Mas();
+                            }
+                            class Program
+                            {
+                                static void Main(string[] args)
+                                {
+                                    Console.WriteLine("/////////    Опыт I   ///////////");
+                                    Console.WriteLine("Введите чётное число");        
+                                    Test.poPytka = Console.ReadLine();
+                                    Console.WriteLine("Введено {0}", Test.poPytka);
+                                    Console.WriteLine("Введите нечётное число");
+                                    Test.poPytka = Console.ReadLine();
+                                    Console.ReadKey();
+                                    Console.WriteLine("/////////    Опыт II   ///////////");
+                                    Test vt = new Test();
+                                    Console.WriteLine("Введите слово");
+                                    vt.pPytka = Console.ReadLine();
+                                    Console.WriteLine("Слово сохранено и выдано: {0}", vt.pPytka);
+                                    Console.ReadKey();
+                                    Console.WriteLine("/////////    Опыт III   ///////////");
+                                    Tst wt = new Tst();
+                                    Console.WriteLine("Введите число");
+                                    wt[1] = Convert.ToInt16(Console.ReadLine());
+                                    Console.WriteLine("Введите 'коэффициент воспроизведения'");
+                                    Console.WriteLine("Результат: {0}",wt[Convert.ToInt16(Console.ReadLine())]);
+                                    Console.ReadKey();
+                                    Console.WriteLine("/////////    Опыт IV   ///////////");
+                                    string[] AR = new string[10];
+                                    int j = 10;
+                                    AR[6] = "W";
+                                    for (int i = 0; i < 10; i++) if (AR[i] == "W") { j = i; break; }               
+                                    Console.WriteLine("ccc {0}",j);
+                                    Console.ReadKey();
+                                    Console.WriteLine("/////////    Опыт V   ///////////");
+                                    string[][][] ARRR = new string[2][][];
+                                    Console.WriteLine("sss {0}", ARRR.Length);
+                                    for (int k = 0; k < ARRR.Length; k++)
+                                    {
+                                        string[][] ARR = new string[8][];
+                                        for (int i = 0; i < ARR.Length; i++) ARR[i] = new string[6]{"A", "B", "C", "D", "E", "F"};
+                                        ARRR[k] = ARR;
+                                    };
+                                    for (int k = 0; k < 2; k++)
+                                        for(int i = 0; i < 8; i++)
+                                            for (int m = 0; m < 6; m++) Console.Write(ARRR[k][i][m]); 
+                                    Console.WriteLine("");
+                                    Console.ReadKey();
+                              }
+                           }
+                        }
+                        
+                        
+                        Индексаторы 
+                        спецификаторы class имя класса
+                        {
+                        private тип [] имя= инициализатор;
+                        …
+                        public тип this[ int индекс]
+                        {
+                        get 
+                        {
+                        return имя [индекс];
+                        }
+                        set 
+                        {
+                        имя[индекс] = value;
+                        }
+                        }
+                        
+                        using System;
+                        
+                        namespace Indexr
+                        {
+                             class Mas 
+                            { 
+                                private string[,] m= {{"aa", "bb", "cc"},{"dd","ee","ff"}};
+                                public  string this[int index, int index2] 
+                                {
+                                    get { return m[index, index2]; }
+                                    set { m[index, index2] = value; }
+                                }
+                            }
+                            class B 
+                            { 
+                                public int id = 5;
+                                public Mas mm = new Mas();
+                            }
+                            class Program
+                            {
+                                static void Main(string[] args)
+                                {
+                                    Mas vm = new Mas();
+                                    Console.WriteLine(vm[1,1]);
+                                    B vb = new B();
+                        //            vb.mm = vm;
+                                    Console.WriteLine(vb.mm[0,0]);           
+                                    Console.Read();
+                                }
+                        

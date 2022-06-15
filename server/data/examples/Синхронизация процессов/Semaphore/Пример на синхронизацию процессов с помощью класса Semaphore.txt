@@ -1,0 +1,55 @@
+using System;
+using System.Threading;
+
+public class Example
+{
+    private static Semaphore _pool;
+
+    private static int _padding;//обеспечивает отступ при выводе
+
+    public static void Main()
+   
+
+
+
+
+ {
+        // создаётся семафор, который может удовлетворить до 3 одновременных запроса.
+        _pool = new Semaphore(0, 3);
+
+        for (int i = 1; i <= 5; i++)//создаются и запускаются 5 потоков
+        {
+            Thread t = new Thread(new ParameterizedThreadStart(Worker));
+            t.Start(i);
+        }
+
+        Thread.Sleep(500);//главный поток (приложение) ждёт, пока все потоки не     
+        //запустятся и станут в ожидании на семафоре (ведь initial count =0 !!)
+
+        Console.WriteLine("Main thread calls Release(3).");
+        _pool.Release(3);//главный поток наращивает семафор до максимума, позволяя всем 3    
+                         //потокам воспользоваться ресурсом
+
+        Console.WriteLine("Main thread exits.");
+        Console.ReadKey();
+    }
+
+    private static void Worker(object num)
+    {
+        Console.WriteLine("Thread {0} begins " +
+            "and waits for the semaphore.", num);
+        _pool.WaitOne();//поток запрашивает семафор
+
+        int padding = Interlocked.Add(ref _padding, 100);
+
+        Console.WriteLine("Thread {0} enters the semaphore.", num);
+
+        // моделируется продолжительность использвания ресурса, 
+        //при каждом обращении на 100 миллисекунд дольше
+        Thread.Sleep(1000 + padding);
+
+        Console.WriteLine("Thread {0} releases the semaphore.", num);
+        Console.WriteLine("Thread {0} previous semaphore count: {1}",
+            num, _pool.Release());
+    }
+}

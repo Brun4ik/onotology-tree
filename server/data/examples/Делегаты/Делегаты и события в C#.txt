@@ -1,0 +1,83 @@
+using System;
+                    using System.Collections.Generic;
+                    using System.Linq;
+                    using System.Text;
+                    using System.Threading.Tasks;
+                    
+                    namespace csConsFWevents
+                    {
+                        public delegate void MyDel(int i);
+                        class A
+                        {
+                            public
+                        void Func1(int i)
+                            {
+                                Console.WriteLine("in func1 {0}", i);
+                            }
+                            public
+                            void Func2(int i)
+                            {
+                                Console.WriteLine("in func2 {0}", i);
+                            }
+                            public
+                            static void Func3(int i)
+                            {
+                                Console.WriteLine("in static func3 {0}", i);
+                    
+                            }
+                            public MyDel x;
+                    //    void(*pff)=func3;//error
+                    };
+                    
+                        class Program
+                        {
+                            static void Main(string[] args)
+                            {
+                                void Funx(int i) { Console.WriteLine("global {0}", i); };
+                                A  a = new A();
+                                a.x = new MyDel(a.Func2);
+                                //	a->x = &A::func2;//error
+                                a.x(10);
+                                
+                                //	&A::pff = a->func3;
+                                //	a->pff(6);
+                                
+                                // declare a delegate instance
+                                MyDel DelInst;
+                    
+                                // test if delegate is initialized
+                        //        if (DelInst)
+                        //            DelInst(7);//error - not initialized
+                    
+                                // assigning to delegate
+                                DelInst = new MyDel(a.Func1);
+                    
+                    
+                                // invoke delegate
+                         //       if (DelInst)
+                                    DelInst(8);
+                                Console.WriteLine("У события нет значения!");
+                  
+                                // add a function
+                                DelInst += new MyDel(a.Func2);
+                    
+                                DelInst(9);
+                    
+                                // remove a function
+                                DelInst -= new MyDel(a.Func1);
+                    
+                                // invoke delegate with Invoke
+                                DelInst.Invoke(10);
+                    
+                                // make delegate to static function
+                                MyDel  StaticDelInst = new MyDel(A.Func3);
+                                StaticDelInst(11);
+                    
+                                MyDel  DelInstGlob = new MyDel(Funx);
+                                DelInstGlob(13);
+                                Console.ReadKey();
+                                return ;
+                    
+                            }
+                        }
+                    }

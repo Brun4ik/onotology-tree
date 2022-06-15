@@ -1,0 +1,39 @@
+using System;
+                        using System.Collections.Generic;
+                        using System.ComponentModel;
+                        using System.Data;
+                        using System.Drawing;
+                        using System.Linq;
+                        using System.Text;
+                        using System.Threading.Tasks;
+                        using System.Windows.Forms;
+                        
+                        namespace csForms01
+                        {
+                            delegate int Calc(int P1, int P2);
+                            public partial class Form1 : Form
+                            {
+                                public Form1()
+                                {
+                                    InitializeComponent();
+                                }
+                                int Sum(int P1, int P2) { return P1 + P2; }
+                                int Mult(int P1, int P2) { return P1 * P2; }
+                                private void textBox1_KeyDown(object sender, KeyEventArgs e)
+                                
+                                private void button1_Click(object sender, EventArgs e)
+                                {
+                                    Calc res=null;
+                                                res = new Calc(Mult);
+                                                res += Sum;
+                                                int x = 2;
+                                                x = res(x, 7);
+                        //            res = delegate (int P1, int P2) { return P1 * P1 + P2 * P2; };
+                        //           int x = res(2, 3);
+                        
+                                    Console.WriteLine("res{0}", x);
+                        //            Console.WriteLine("res{0}",res(x, 7));
+                                    textBox1.Text = Convert.ToString(res(2, 5));
+                                    
+                                }
+                            }

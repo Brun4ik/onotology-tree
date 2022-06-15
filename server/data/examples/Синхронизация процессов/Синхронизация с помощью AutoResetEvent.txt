@@ -1,0 +1,72 @@
+using System;
+using System.Threading;
+
+namespace consWaitHandleTrial02
+{
+
+    class Program
+    {
+       static AutoResetEvent autoEvent = new AutoResetEvent(true);
+//        static ManualResetEvent autoEvent = new ManualResetEvent(true);
+       static AutoResetEvent[] Evs = new AutoResetEvent[3];
+
+        static void Main()
+        {
+            Evs[0] = new AutoResetEvent(false);
+            Evs[1] = new AutoResetEvent(false);
+            Evs[2] = new AutoResetEvent(false);
+            Thread trd0 = new Thread(Proc);
+            trd0.Name = "O";
+            trd0.Start();
+
+        Thread trd1 = new Thread(WorkMethod);
+        trd1.Name = "A";
+        Thread trd2 = new Thread(WorkMethod);
+        trd2.Name = "B";
+        Thread trd3 = new Thread(WorkMethod);
+        trd3.Name = "C";
+        trd1.Start();
+        trd2.Start();
+        trd3.Start();
+        Console.ReadKey();
+//главный поток переходит в состояние ожидания и 
+//выполняется метод Proc – рабочая программа этого потока до задержки на WaitAll, 
+//после чего начинают выполняться потоки trd1, trd2, trd3, то есть их рабочая 
+//программа WorkMethod.                            
+        autoEvent.Set();
+        Console.ReadKey();
+        }
+
+        static void WorkMethod()//object stateInfo)
+        {
+            Console.WriteLine("Thread "+Thread.CurrentThread.Name +" priority " +Thread.CurrentThread.Priority +" started");
+//            autoEvent.Reset(); 
+            autoEvent.WaitOne();
+            Console.WriteLine("Thread " + Thread.CurrentThread.Name + " priority " + Thread.CurrentThread.Priority + " in CS");
+            Thread.Sleep(5000);
+            if (Thread.CurrentThread.Name == "A") Evs[0].Set();
+            if (Thread.CurrentThread.Name == "B") Evs[1].Set();
+            if (Thread.CurrentThread.Name == "C") Evs[2].Set();
+
+//каждый поток, проходя через эти операторы, сигнализирует «свой» объект синхронизации.
+//Когда все объекты Evs[0], Evs[1], Evs[2] будут сигнализированы, разблокируется //поток trd0, задержанный на WaitOne в Proc.
+
+            Console.WriteLine("Thread " + Thread.CurrentThread.Name + " priority " + Thread.CurrentThread.Priority + " exits CS");
+//            autoEvent.WaitOne();
+            autoEvent.Set(); 
+            Console.WriteLine("Tread " + Thread.CurrentThread.Name + " ended");
+        }
+
+        static void Proc()
+        {
+            Console.WriteLine("Thread "+Thread.CurrentThread.Name +" priority " +Thread.CurrentThread.Priority +" started");
+            WaitHandle.WaitAll(Evs);
+            Console.WriteLine("Thread " + Thread.CurrentThread.Name + " priority " + Thread.CurrentThread.Priority + " in CS");
+            Thread.Sleep(1000);
+            Console.WriteLine("Thread " + Thread.CurrentThread.Name + " priority " + Thread.CurrentThread.Priority + " exits CS");
+
+        }
+
+    }
+
+}

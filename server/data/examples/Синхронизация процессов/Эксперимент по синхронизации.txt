@@ -1,0 +1,38 @@
+using System;
+using System.Text;
+using System.Threading.Tasks;
+using System.Threading;
+using System.Diagnostics;
+
+namespace consParaTrial01
+{
+    class Program
+    {
+        static void run()
+        {
+            Console.WriteLine("Running");
+            Console.WriteLine("Continuing");
+            Console.WriteLine("\nCurrent thread: {0}", Thread.CurrentThread.Priority);
+            Console.WriteLine("Finishing");
+
+        }
+        static void Main(string[] args)
+        {
+            Process prc = new Process();
+            prc.StartInfo = new ProcessStartInfo("notepad.exe");
+            prc.Start();
+
+            Thread thrd = new Thread(new ThreadStart(run));
+ //           thrd.Priority = ThreadPriority.Highest;
+ //           Thread.CurrentThread.Priority = ThreadPriority.BelowNormal;
+            thrd.Start();
+
+ //           Thread.Sleep(2000);
+            //            thrd.Join();
+            Console.WriteLine("\nMain thread: {0}", Thread.CurrentThread.Priority);
+            Console.WriteLine("Конец.");
+            prc.Kill();
+            Console.ReadKey();
+        }
+    }
+}

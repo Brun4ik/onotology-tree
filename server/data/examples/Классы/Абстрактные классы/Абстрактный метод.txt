@@ -1,0 +1,46 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace ConsoleApplication1
+{
+/// <summary>
+/// Abstract class ClassA
+/// </summary>
+	public abstract class ClassA
+	{
+    		public int a;
+    		public void XXX()
+    	{
+
+    	}
+
+   		abstract public void YYY();
+	}
+
+/// <summary>
+/// Derived class.
+/// Class derived from abstract class ClassA.
+/// </summary>
+	public class ClassB:ClassA
+	{
+    		public void YYY()
+    	{
+
+    	}
+	}
+
+/// <summary>
+/// Program: used to execute the method.
+/// Contains Main method.
+/// </summary>
+	public class Program
+	{
+    		private static void Main(string[] args)
+    	{
+        	ClassB classB = new ClassB();
+        	Console.ReadKey();
+    	}
+	}
+}

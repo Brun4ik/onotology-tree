@@ -1,0 +1,46 @@
+using System;
+                        using System.Collections.Generic;
+                        using System.Linq;
+                        using System.Text;
+
+                        using System.Threading.Tasks;
+
+                        namespace csInherit01
+                        {
+                            abstract class G
+                            {
+                                public G() { Console.WriteLine("constructor G");}
+                                public string Report;
+                                public abstract void Prod();
+                                public void Print(){ Console.WriteLine(Report); }
+                            }
+                            class A:G
+                            {
+                                public A() { Report = "!!!"; Console.WriteLine("constructor A"); }
+                        //        public string Report;
+                                public override void Prod() { Report += " " + "Part A";  }
+                            }
+                            class B:G
+                            {
+                                public B() { Console.WriteLine("constructor B");}
+                            public override void Prod(){  Report += " " + "Part B"; }
+                            }
+                            
+                            class Program
+                            {   static G vg;
+                                static void Main(string[] args)
+                                {
+                                    
+                                    Console.WriteLine("Enter A or B");
+                                    char c = Console.ReadKey().KeyChar;
+                                    switch (c) 
+                                    {
+                                        case 'A': vg = new A(); break;
+                                        case 'B': vg = new B(); break;
+                                    };
+                                    vg.Prod();
+                                    vg.Print();
+
+                                    Console.Read();
+                                }
+                            }

@@ -1,0 +1,71 @@
+Тип как параметр
+                            Консольный проект C#
+                            using System;
+                            using System.Text;
+                            
+                            namespace csCons01
+                            {
+                                &lt;span&gt;delegate P Legat&lt;P&gt;(P p) where P : class;//для опыта IV&lt;/span&gt;
+                            
+                                class A &lt;T, Q&gt; where Q: class
+                                {
+                                    public delegate T Del (T t, String ss);//для опыта III
+                                    public A(T s) { X = s;}
+                                    public  T X;
+                                    public void F() 
+                                    {
+                                        Console.WriteLine(X.GetType());
+                                        Console.WriteLine(X.GetType().Name);
+                                        Console.WriteLine(&quot;ddd {0}&quot;, X); 
+                                    }
+                                    public Q Root;
+                                    public T Star {get;set;}
+                                    public Del dd;//для опыта III
+                                    public Q Trans(Q q) { Console.WriteLine(&quot;Trans&quot;); return q; }//для опыта IV
+                                }
+                                class C
+                                {
+                                    string Body;
+                                    public C Next;
+                                    public int Join(int n, string sent) 
+                                    {
+                                        Console.WriteLine(n.ToString() + ' ' + sent);
+                                        return n;        
+                                    }
+                                }
+                                    
+                                    class Program
+                                {
+                                    static Boolean Check&lt;S&gt;(S s) { Console.WriteLine(s.ToString()); return true; }//для опыта IV
+                                    &lt;span&gt;static Legat&lt;span&gt;&lt;C&gt;&lt;/span&gt; lgt;//для опыта IV&lt;/span&gt;
+                                    static void Main(string[] args)
+                                    {
+                            //***********************  Опыт I *****************************
+                                        A&lt;int, C&gt; a= new A&lt;int, C&gt;(22);
+                                        a.F();
+                                        a.X = 11;
+                                        a.Star = 555;
+                                        Console.WriteLine(&quot;Star {0}&quot;, a.Star);
+                                        A&lt;double, C&gt; b = new A&lt;double, C&gt;(3.1415);
+                                        b.X = 0.2;
+                                        b.F();
+                            //***********************  Опыт II *****************************
+                                        C d;
+                                        d = new C();           
+                                        a.Root = d;
+                                        a.Root.Join(17, &quot;Erde&quot;);
+                            //***********************  Опыт III *****************************
+                                        a.dd = d.Join;
+                                        a.dd(99, &quot;Himmel&quot;);
+                            //***********************  Опыт IV ******************************
+                                        Check(33);
+                                        Check&lt;C&gt;(d);
+                                        Check(d);
+                                        lgt = a.Trans;
+                                        lgt(d);
+                            
+                                        Console.ReadKey();
+                                    }
+                                }
+                            }
+                        

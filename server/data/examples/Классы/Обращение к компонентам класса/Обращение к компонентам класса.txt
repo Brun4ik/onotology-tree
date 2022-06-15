@@ -1,0 +1,70 @@
+using System;
+                        namespace csClassBasics01
+                        {
+                            class A
+                            {
+                                public static int k;
+                                public int m;
+                                public static void FA() { Console.WriteLine("static FA is called."); }
+                                public void GA() { Console.WriteLine("non-static GA is called."); }
+                                public A()
+                                {
+                                    k = 30;
+                                    m = 100;
+                                    Console.WriteLine("explicite class A constructor is called. m is set to {0}, k is set to {1}", m, k);
+                                }
+                            }
+                            /////
+                            class B
+                            {
+                                public static int k = 4;
+                                public int m = 5;
+                                public static void FB()
+                                {
+                                    k = 300;
+                        //            m = 20;//доступ к не-статическим ресурсам без ссылки не допускается компилятором! 
+                                    Console.WriteLine("static FB is called.");
+                                }  
+                                public void GB()
+                                {
+                                    k = 7;
+                                    m = 114;
+                                    A.k = 9;
+                                    Console.WriteLine("non-static GB is called.");
+                                }
+                            }
+                            /////
+                            class Program
+                            {
+                                static void Main()//string[] args)
+                                {
+                                    A.FA();//вызван статический метод, ресурс - в другом классе - должен быть публичным
+                                    A.k = 400;//статическое поле, ресурс - в другом классе - должен быть публичным
+                                    Console.WriteLine("static k is set to {0}", A.k);
+                        //            A.GA(); A.m = 1; //доступ к не-статическим ресурсам по имени класса не допускается компилятором!
+                                    /////////////////    
+                                    A X = new A();//вызывается конструктор, определённый в классе, создаёт объект.
+                                    Console.WriteLine("explicit constructor has initialized m to {0}, k - to {1}", X.m, A.k);
+                        //            X.k = 0; 
+                        //            X.FA(); //доступ к статическим ресурсам от экземпляра класса не допускается компилятором!
+                                    X.GA();//вызван не-статический метод
+                                    X.m = 300;//не-статическое поле            
+                                    Console.WriteLine("non-static m is set to {0}", X.m);        
+                        //            Console.ReadKey();
+                                    //////////////////
+                                    B Z = new B();//вызывается конструктор класса по умолчанию, создаёт объект.
+                                    Console.WriteLine("default constructor is called. m and k are set by definition and not by constructor, m to {0}, k - to {1}", Z.m, B.k);
+                                    B.FB();
+                                    Console.WriteLine("static k is set to {0}", B.k);       
+                                    B.k = 125;//статическое поле.
+                                    Z.m = 150;//не-статическое поле.           
+                                    Console.WriteLine("non-static m is set to {0}, static k is set to {1}", Z.m, B.k);
+                                    Z.GB(); //доступ от экземпляра класса к не-статическому методу
+                                    Console.WriteLine("non-static m is set to {0}, static k is preserved {1}", Z.m, B.k);
+                                    Console.WriteLine("GB has set static k in another class to {0}", A.k);
+                                    A W;
+                        //            W.k = 1;//запрещается компилятором, так как переменной не присвоено значение
+                        //            W.GA();//запрещается компилятором, так как переменной не присвоено значение            Console.ReadKey();
+                                }
+                            }
+                        }
