@@ -1,6 +1,6 @@
 body {
     margin: auto;
-    overflow: hidden;
+    overflow: scroll;
 }
 
 .header {
@@ -18,7 +18,7 @@ body {
     display: flex;
     flex-direction: row;
     margin-top: 10px;
-    height: 800px;
+    height: auto;
     margin-right: 5px;
 }
 
@@ -42,7 +42,6 @@ body {
 .left_Panel_List {
     width: 100%;
     height: 1000px;
-    overflow-x: scroll;
 }
 
 .input_elem {
@@ -60,7 +59,7 @@ body {
 }
 
 .sButtonDiv {
-    
+
 }
 
 .btnGraph {
@@ -121,4 +120,8 @@ li {;
 .btn_download {
     text-align: center;
     background: white;
+}
+
+.items {
+    cursor: pointer;
 }

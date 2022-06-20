@@ -1,4 +1,5 @@
 import {Example} from "../interfaces/example";
+import {Tree} from "./tree"
 
 export class CentralPanel {
     readonly _container: HTMLDivElement;
@@ -9,7 +10,6 @@ export class CentralPanel {
     public centerElem: HTMLDivElement;
     public rightElem: HTMLDivElement;
     public rightElemContent: HTMLPreElement;
-    public roots: any = [];
 
     constructor(root: HTMLDivElement, data: Example[],) {
         this._container = document.createElement('div');
@@ -22,8 +22,9 @@ export class CentralPanel {
         this.centerElemContent = document.createElement('pre');
         this.rightElemContent = document.createElement('pre');
         this.render();
-        this.createTree(data);
-        const listNameExamples = this.createList(this.roots, document.body);
+        const tree = new Tree();
+        tree.createTree(data);
+        const listNameExamples = this.createList(tree.roots, document.body);
         this.leftPanelList.append(listNameExamples);
 
         root.append(this._container);
@@ -57,25 +58,6 @@ export class CentralPanel {
     }
 
 
-    private createTree(data: Example[]) {
-        let map: any = {}, node, i;
-        for (i = 0; i < data.length; i += 1) {
-            map[data[i].id] = i;
-            data[i].children = [];
-        }
-        for (i = 0; i < data.length; i += 1) {
-            node = data[i];
-            if (node.parent_id != 0) {
-                data[map[node.parent_id]].children.push(node);
-            } else {
-                this.roots.push(node);
-            }
-        }
-        console.log(this.roots)
-        return this.roots;
-
-    }
-
     private hasChildren(data: Example[]) {
         let chi: boolean
         data.forEach(item => {
@@ -87,79 +69,47 @@ export class CentralPanel {
         })
     }
 
-     private createList(data: Example[], el: any): HTMLElement {
+    private createList(data: Example[], el: any): HTMLElement {
         const listNameExamples = document.createElement('ul')
 
         data.forEach(item => {
-            let li = document.createElement('li')
-            let a = document.createElement('a')
-            let div: HTMLElement;
-            li.classList.add('liElem')
-            a.appendChild(document.createTextNode(item.name));
-            a.classList.add('items');
-            li.appendChild(a);
-            if(item.children){
-                div = document.createElement('div');
-                div.classList.add('childEls')
-                this.createList(item.children, div);
-                li.appendChild(div);
-            }
-            listNameExamples.appendChild(li);
-            a.getElementsByClassName('items');
-
-            a.onclick = (event:MouseEvent) => {
-                if (item.id) {
-                    this.centerElemContent.textContent = item.text;
-                    this.rightElemContent.textContent = item.description;
+                let li = document.createElement('li')
+                let a = document.createElement('a')
+                let div: HTMLElement;
+                li.classList.add('liElem')
+                a.appendChild(document.createTextNode(item.name));
+                a.classList.add('items');
+                li.appendChild(a);
+                if(item.children){
+                    div = document.createElement('div');
+                    div.classList.add('childEls')
+                    this.createList(item.children, div);
+                    li.appendChild(div);
                 }
-                if(div.style.display === 'none') {
-                    div.style.display = 'block';
-                } else {
-                    div.style.display = 'none';
-                }
-            }
+                listNameExamples.appendChild(li);
+                a.getElementsByClassName('items');
 
-        }
-       )
+                a.onclick = (event:MouseEvent) => {
+                    if (item.id) {
+                        this.centerElemContent.textContent = item.text;
+                        this.rightElemContent.textContent = item.description;
+                    }
+                    if(div.style.display === 'none') {
+                        div.style.display = 'block';
+                    } else {
+                        div.style.display = 'none';
+                    }
+                }
+
+            }
+        )
 
         el.appendChild(listNameExamples);
         return listNameExamples;
     }
     public downloadClick() {
-        // if(this.centerElemContent.textContent != null) {
-        //     let contend : string = document.querySelector('#center_elem')!.innerHTML;
-        //     let fileContents: any = new DOMParser().parseFromString(contend, "text/html").documentElement.textContent
-        //     let fileName= "data.txt";
-        //
-        //     let pp = document.createElement('a');
-        //     pp.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(fileContents));
-        //     pp.setAttribute('download', fileName);
-        //     this.btnAdd.onclick = (event: MouseEvent) => {
-        //         if(this.centerElemContent.textContent !== '') {
-        //             pp.click();
-        //         }
-        //
-        //     }
-        // }
-
-
-
-
-            //link.onclick = (event:MouseEvent);
-
-        // download. = (event: MouseEvent) => {
-        //     if(this.centerElemContent.textContent != '') {
-        //         this.btnAdd.setAttribute('download', 'info.txt')
-        //         //let str: String = this.centerElemContent.innerText.toString();
-        //         let data = new Blob([text], {type: 'text/plain'});
-        //         this.btnAdd
-        //     }
-        // }
 
     }
-
-
-
 
 
 }
