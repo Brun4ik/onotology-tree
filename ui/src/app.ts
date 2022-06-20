@@ -1,7 +1,6 @@
 import { HeaderComponent } from "./components/header-component";
 import { CentralPanel } from "./components/CentralPanel_component";
 import {Example} from "./interfaces/example";
-import {ExampleId} from "./interfaces/exampleId";
 //import { appendChildrenDOM } from "./components/appendChildrenDOM";
 
 

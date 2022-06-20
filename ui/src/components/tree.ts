@@ -21,4 +21,15 @@ export class Tree {
         return this.roots;
 
     }
+
+    // private hasChildren(data: Example[]) {
+    //     let chi: boolean
+    //     data.forEach(item => {
+    //         if(item.children) {
+    //             return chi = true;
+    //         } else {
+    //             return chi = false;
+    //         }
+    //     })
+    // }
 }
