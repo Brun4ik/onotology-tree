@@ -3,7 +3,6 @@ import {Tree} from "./tree"
 import {LeftLList} from "./leftList"
 import {centralPanel} from "./centralPanel";
 import {RightPanel} from "./rightPanel";
-
 export class CentralPanel {
     readonly _container: HTMLDivElement;
     private centralPanelContent: any;
@@ -48,6 +47,7 @@ export class CentralPanel {
                     div.classList.add('childEls')
                     this.createList(item.children, div);
                     li.appendChild(div);
+                    li.style.listStyleImage = "url('../images/123.png')";
                 }
                 listNameExamples.appendChild(li);
                 a.getElementsByClassName('items');
@@ -63,6 +63,11 @@ export class CentralPanel {
                         div.style.display = 'none';
                     }
                 }
+                // if(item.children) {
+                //     li.style.content = '\25ba';
+                // } else {
+                //     li.style.content = '';
+                // }
 
             }
         )
