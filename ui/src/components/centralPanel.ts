@@ -1,4 +1,4 @@
-export class centralPanel {
+export class CentralPanel {
     public centerElemContent: HTMLPreElement;
     public centerElem: HTMLDivElement;
 

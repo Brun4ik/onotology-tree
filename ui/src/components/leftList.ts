@@ -1,4 +1,4 @@
-export class LeftLList {
+export class LeftList {
     public leftPanel: HTMLDivElement;
     public leftPanelList: HTMLDivElement;
 
